@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+   <title>WeatherAPP</title>
+   <style>
+     .main{
+       display: flex;
+       justify-content: center;
+       background-color: aqua;
+       align-items: center;
+       height: 100vh;
+       margin: 0;
+     }
+   </style>
+</head>
+<body class="main">
+   <div class="box">
+     <h1 style="color: black;">Meteorological Real-Time Data Aggregator</h1>
+       <div class="wave-1"></div>
+       <div class="wave-2"></div>
+       <div class="wave-3"></div>
+   
+   <div class="info">
+       <h2 class="LOCATION">
+        <%= city %>, <%= loc  %> <i class="fa-solid fa-street-view" style="color: white;"></i>
+       </h2>
+       <h2 id="DATE">
+           Mon | dec 4 | time
+       </h2>
+       <h3 class="TEMPRATURE">Temprature <%= temp %></h3>
+       <h3 class="HUMIDITY">
+        Conditions:
+        <ul>
+          <% humArray.forEach(item => { %>
+            <li><%= item[0] %>: <%= item[1] %></li>
+          <% }); %>
+        </ul>
+      </h3>
+   </div>
+   </div>
+   <script>
+     const currentD= document.getElementById("DATE");
+     let weatherC= document.getElementById("weathericon");
+     const tempstatus= "clouds"
+     
+     
+     const getCurrentDay = () =>{
+       let wday = new Array(7);
+       wday[0] = "Sunday";
+       wday[1] = "Monday";
+       wday[2] = "Tuesday";
+       wday[3] = "Wednesday";
+       wday[4] = "Thursday";
+       wday[5] = "Friday";
+       wday[6] = "Saturday";
+
+       let currentTime = new Date();
+       let day = (wday[currentTime.getDay()]);
+       return day;
+     };
+     getCurrentDay();
+
+
+     const getCurrentTime = ()=>{
+       var now = new Date();
+       var month = now.getMonth() +1;
+       var day = now.getDate();
+       var year = now.getFullYear();
+
+       let hours = now.getHours();
+       let minutes = now.getMinutes();
+       if(hours < 11 )
+       {
+         period = "AM";
+       }
+       else{
+         period = "PM"
+       }
+       hours = hours-12;
+       return ` ${day}/${month}/${year} | ${hours}:${minutes} ${period}`;
+     };
+     getCurrentTime();
+
+
+
+
+     currentD.innerHTML = getCurrentDay() + " | " + getCurrentTime();
+   </script>
+</body>
+</html>
